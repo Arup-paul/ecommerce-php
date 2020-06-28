@@ -1,5 +1,5 @@
 <?php
 session_start();
 unset($_SESSION);
-
-header('Location: ' . $site_url .'/backend/dashboard/index.php');
+session_destroy();
+header('Location: index.php');

@@ -1,50 +1,58 @@
 <?php
 
+session_start();
+require_once '../../app/Database.php';
+$messages = [];
 
-// $data = [
-//     'username' => 'Arup',
-//     'password' => '1234'
-// ];
-
-// $string = [];
-//     foreach($data as $key => $value){
-//       $string[] = "'{$key}' = '{$value}'";
-//     }
-//     $strings = implode(',',$string);
-   
-//     echo $strings;
-//     die();
+if (isset($_POST['login'])) {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
 
-// session_start();
-// require_once '../../app/Database.php';
-// $messages = [];
+    $result = $connection->select('users', 'id, email, password', [
+        'email' => $email,
+    ]);
 
-// if (isset($_POST['login'])) {
-//     $email = trim($_POST['email']);
-//     $password = trim($_POST['password']);
+    $result->execute();
+    
+    if($result->rowCount() === 1){
+        $data = $result->fetch();
+      if(password_verify($password,$data['password'])){
+          $message['success'] = 'Logged in';
+          $_SESSION['logged_in'] = true;
+          $_SESSION['email'] = $data['email'];
+          $_SESSION['id'] = $data['id'];
 
-//     $result = $connection->select('users', 'id, email, password', [
-//         'email' => $email,
-//     ]);
-//     $result->execute();
+          header('Location:dashboard.php');
 
-//     if ($result->rowCount() === 1) {
-//         $data = $result->fetch();
-//         if (password_verify($password, $data['password'])) {
-//             $messages['success'] = 'Logged in';
-//             $_SESSION['logged_in'] = true;
-//             $_SESSION['email'] = $data['email'];
-//             $_SESSION['id'] = $data['id'];
+      }else{
+          $message['warning'] = 'Email and Password does not match';
+      }
+    } else {
+         $message['warning'] = 'User not found';
+     }   
 
-//             header('Location: dashboard.php');
-//         } else {
-//             $messages['warning'] = 'User and password does not match';
-//         }
-//     } else {
-//         $messages['warning'] = 'User not found';
-//     }
-// }
+    // $result = $connection->select('users', 'id, email, password', [
+    //     'email' => $email,
+    // ]);
+    // $result->execute();
+
+    // if ($result->rowCount() === 1) {
+    //     $data = $result->fetch();
+    //     if (password_verify($password, $data['password'])) {
+    //         $messages['success'] = 'Logged in';
+    //         $_SESSION['logged_in'] = true;
+    //         $_SESSION['email'] = $data['email'];
+    //         $_SESSION['id'] = $data['id'];
+
+    //         header('Location: dashboard.php');
+    //     } else {
+    //         $messages['warning'] = 'User and password does not match';
+    //     }
+    // } else {
+    //     $messages['warning'] = 'User not found';
+    // }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -71,12 +79,12 @@
     </div>
 
     <div class="form-label-group">
-        <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+        <input type="email" name="email" class="form-control"  required autofocus>
         <label for="inputEmail">Email address</label>
     </div>
 
     <div class="form-label-group">
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
+        <input type="password" name="password" class="form-control"  required>
         <label for="inputPassword">Password</label>
     </div>
 

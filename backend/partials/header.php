@@ -1,6 +1,6 @@
 <?php
 session_start();
-$site_url = 'http://php-ecommerce.sumon/backend';
+$site_url = 'http: //localhost/all-php/php-ecomerce/backend./';
 require_once '../../app/Database.php';
 $messages = [];
 ?>
@@ -27,7 +27,7 @@ $messages = [];
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="<?php echo $site_url; ?>/dashboard/logout.php">Logout</a>
+            <a class="nav-link" href="logout.php">Logout</a>
         </li>
     </ul>
 </nav>
