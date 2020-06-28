@@ -1,0 +1,17 @@
+{
+  "name": "arup/php-ecommerce",
+  "description": "A basic e-commerce project using PHP",
+  "type": "project",
+  "license": "MIT",
+  "authors": [{
+    "name": "Arup",
+    "email": "aruppaulctg@gmail.com"
+  }],
+  "require": {
+    "swiftmailer/swiftmailer": "^6.0",
+    "mpdf/mpdf": "^7.1"
+  },
+  "psr-4": {
+    "App\\": "app/"
+  }
+}
