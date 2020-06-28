@@ -73,7 +73,7 @@ include_once '../partials/header.php';
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
         request.onreadystatechange = function () {
-            window.location.href = "<?php echo $site_url; ?>/roles/create.php";
+            window.location.href = "../roles/create.php";
         };
 
         request.send("name=" + role_name);

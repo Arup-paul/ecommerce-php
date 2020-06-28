@@ -2,6 +2,7 @@
 
 session_start();
 require_once '../../app/Database.php';
+require_once '../../vendor/autoload.php';
 $message = [];
 
 if ( isset( $_POST['register'] ) ) {
@@ -18,6 +19,25 @@ if ( isset( $_POST['register'] ) ) {
     ] );
 
     if ( $result ) {
+
+        //mail
+
+        $transport = ( new Swift_SmtpTransport( 'smtp.mailtrap.io', 25 ) )
+            ->setUsername( '4b5d173ad1bb11' )
+            ->setPassword( 'c44a015db289dd' );
+
+        /// Create the Mailer using your created Transport
+        $mailer = new Swift_Mailer( $transport );
+
+        // Create a message
+        $msg = ( new Swift_Message( 'Registration succesfully' ) )
+            ->setFrom( ['no-replay@php-ecommerce.com' => 'Ecommerce'] )
+            ->setTo(  [$email => $username] )
+            ->setBody( 'Your account Registerd. pLease visit the following link to login' )
+        ;
+
+        $mailer->send($msg);
+
         $message['success'] = 'Registration succefully';
     }
 
@@ -105,7 +125,7 @@ if ( isset( $_POST['register'] ) ) {
 </head>
 
 <body>
-    
+
 <form class="form-signin" action="" method="post">
     <?php include_once '../partials/message.php';?>
 

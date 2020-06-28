@@ -16,7 +16,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo $site_url; ?>/roles/index.php">
+                <a class="nav-link" href="../roles/index.php">
                     <span data-feather="file"></span>
                     Roles
                 </a>
